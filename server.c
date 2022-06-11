@@ -1,4 +1,5 @@
 
+#include "aux.h"
 #include "segel.h"
 
 // 
