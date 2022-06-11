@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "queue.h": "c",
+        "stdio.h": "c",
+        "segel.h": "c",
+        "aux.h": "c"
+    }
+}
