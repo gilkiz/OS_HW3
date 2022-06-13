@@ -135,7 +135,7 @@ typedef struct node
 typedef struct thread_info
 {
     Node request_node;
-    pid_t thread_id;
+    pthread_t thread_id;
     int thread_index;
     int thread_count;
     int thread_static_count;

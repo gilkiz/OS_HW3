@@ -1,5 +1,4 @@
 
-#include "aux.h"
 #include "segel.h"
 
 // 
@@ -15,11 +14,12 @@
 // HW3: Parse the new arguments too
 
 static Queue waiting_tasks;
-static LinkedList busy_tasks;
-static ThreadInfo *thread_info;
+// static LinkedList busy_tasks;
+// static ThreadInfo *thread_info;
 
 pthread_mutex_t lock_queue, lock_list;
 pthread_cond_t requests_max, queue_not_empty;
+void requestHandle(int fd, ThreadInfo curr_thread_info);
 
 int tasks_count = 0;
 int threads_number, req_number;
@@ -49,25 +49,28 @@ void* thread_start_routine(void* thread_info)
         Node head_node = popQueue(waiting_tasks);
         struct timeval temp;
         gettimeofday(&temp, NULL); 
-        timersub(&(head_node->stat_req_arrival), &temp, &(head_node->stat_req_dispatch));
+        head_node->stat_req_dispatch.tv_sec = temp.tv_sec-head_node->stat_req_arrival.tv_sec;
+        head_node->stat_req_dispatch.tv_usec = temp.tv_usec-head_node->stat_req_arrival.tv_usec;
         pthread_mutex_unlock(&lock_queue);
 
 
         pthread_mutex_lock(&lock_list);
         curr_thread_info->request_node=head_node;
-        insertLinkedList(busy_tasks, head_node);
+        // insertLinkedList(busy_tasks, head_node);
         pthread_mutex_unlock(&lock_list);
         int conn_fd = curr_thread_info->request_node->connection_fd;
         requestHandle(conn_fd, curr_thread_info);
 
         close(conn_fd);
         pthread_mutex_lock(&lock_list);
-        removeFromLinkedList(busy_tasks, head_node);
+        // removeFromLinkedList(busy_tasks, head_node);
         tasks_count--;
         pthread_mutex_unlock(&lock_list);
 
     }
+free(thread_info);
 }
+
 
 void initialize_task(Node request_node, char* sched_policy)
 {
@@ -136,16 +139,20 @@ int main(int argc, char *argv[])
     pthread_cond_init(&requests_max, NULL);
     pthread_cond_init(&queue_not_empty, NULL);
     waiting_tasks = createQueue();
-    busy_tasks = createLinkedList();
+    // busy_tasks = createLinkedList();
 
-    thread_info = (ThreadInfo *)malloc(sizeof(ThreadInfo) * threads_number);
-    if(thread_info == NULL)
-    {
-        return -1;
-    }
+    // thread_info = (ThreadInfo *)malloc(sizeof(ThreadInfo) * threads_number);
+    // if(thread_info == NULL)
+    // {
+    //     return -1;
+    // }
     for(int i=0; i<threads_number; i++)
     {
-        ThreadInfo new_thread_info = malloc(sizeof(*new_thread_info));
+        ThreadInfo new_thread_info = (ThreadInfo)malloc(sizeof(*new_thread_info));
+        if(new_thread_info == NULL)
+        {
+            // not good
+        }
         
         new_thread_info->request_node = NULL;
         new_thread_info->thread_index = i;
@@ -158,7 +165,7 @@ int main(int argc, char *argv[])
         {
             // thread failure
         }
-        thread_info[i] = new_thread_info;
+        // thread_info[i] = new_thread_info;
     } 
 
     listenfd = Open_listenfd(port);
@@ -168,6 +175,10 @@ int main(int argc, char *argv[])
 
 
         Node new_node = (Node)malloc(sizeof(*new_node));
+        if(new_node == NULL)
+        {
+            // not good
+        }
         new_node->connection_fd = connfd;
         gettimeofday(&new_node->stat_req_arrival, NULL); 
         if(new_node == NULL)
@@ -177,6 +188,7 @@ int main(int argc, char *argv[])
         new_node -> connection_fd = connfd;
         initialize_task(new_node, argv[4]);
     }
+    deleteQueue(waiting_tasks);
 
 }
 

@@ -44,10 +44,13 @@ void requestError(int fd, char *cause, char *errnum, char *shortmsg, char *longm
    printf("%s", buf);
 
    sprintf(buf, "Content-Length: %lu\r\n\r\n", strlen(body));
+
+   addOurStatistics(buf, curr_thread_info);
+
    Rio_writen(fd, buf, strlen(buf));
    printf("%s", buf);
 
-   addOurStatistics(&buf, curr_thread_info);
+   
 
    // Write out the content
    Rio_writen(fd, body, strlen(body));
@@ -120,7 +123,7 @@ void requestGetFiletype(char *filename, char *filetype)
       strcpy(filetype, "text/plain");
 }
 
-void requestServeDynamic(int fd, char *filename, char *cgiargs)
+void requestServeDynamic(int fd, char *filename, char *cgiargs, ThreadInfo curr_thread_info)
 {
    char buf[MAXLINE], *emptylist[] = {NULL};
 
@@ -128,6 +131,7 @@ void requestServeDynamic(int fd, char *filename, char *cgiargs)
    // The CGI script has to finish writing out the header.
    sprintf(buf, "HTTP/1.0 200 OK\r\n");
    sprintf(buf, "%sServer: OS-HW3 Web Server\r\n", buf);
+   addOurStatistics(buf, curr_thread_info);
 
    Rio_writen(fd, buf, strlen(buf));
    pid_t pid_my = Fork();
@@ -161,7 +165,8 @@ void requestServeStatic(int fd, char *filename, int filesize, ThreadInfo curr_th
    sprintf(buf, "%sServer: OS-HW3 Web Server\r\n", buf);
    sprintf(buf, "%sContent-Length: %d\r\n", buf, filesize);
    sprintf(buf, "%sContent-Type: %s\r\n\r\n", buf, filetype);
-   addOurStatistics(&buf, curr_thread_info);
+
+   addOurStatistics(buf, curr_thread_info);
 
    Rio_writen(fd, buf, strlen(buf));
 
@@ -200,19 +205,19 @@ void requestHandle(int fd, ThreadInfo curr_thread_info)
    }
 
    if (is_static) {
-      curr_thread_info->thread_static_count++;
       if (!(S_ISREG(sbuf.st_mode)) || !(S_IRUSR & sbuf.st_mode)) {
          requestError(fd, filename, "403", "Forbidden", "OS-HW3 Server could not read this file", curr_thread_info);
          return;
       }
+      curr_thread_info->thread_static_count++;
       requestServeStatic(fd, filename, sbuf.st_size, curr_thread_info);
    } else {
-      curr_thread_info->thread_dynamic_count++;
       if (!(S_ISREG(sbuf.st_mode)) || !(S_IXUSR & sbuf.st_mode)) {
          requestError(fd, filename, "403", "Forbidden", "OS-HW3 Server could not run this CGI program", curr_thread_info);
          return;
       }
-      requestServeDynamic(fd, filename, cgiargs);
+      curr_thread_info->thread_dynamic_count++;
+      requestServeDynamic(fd, filename, cgiargs, curr_thread_info);
    }
 }
 
