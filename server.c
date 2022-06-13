@@ -33,7 +33,17 @@ void getargs(int *port, int *threads_number, int *req_number, int argc, char *ar
     }
     *port = atoi(argv[1]);
     *threads_number = atoi(argv[2]);
+    if(*threads_number<1)
+    {
+        fprintf(stderr, "\nInvalid threads number, should be a positive integer \n");
+	    exit(1);
+    }
     *req_number = atoi(argv[3]);
+    if(*req_number<1)
+    {
+        fprintf(stderr, "\nInvalid requests number, should be a positive integer \n");
+	    exit(1);
+    }
 }
 
 void* thread_start_routine(void* thread_info)
@@ -42,30 +52,31 @@ void* thread_start_routine(void* thread_info)
     while(1)
     {
         pthread_mutex_lock(&lock_queue);
-        while(waiting_tasks -> size == 0)
+        while(waiting_tasks->size == 0)
         {
             pthread_cond_wait(&queue_not_empty, &lock_queue);
         }
         Node head_node = popQueue(waiting_tasks);
         struct timeval temp;
         gettimeofday(&temp, NULL); 
-        head_node->stat_req_dispatch.tv_sec = temp.tv_sec-head_node->stat_req_arrival.tv_sec;
-        head_node->stat_req_dispatch.tv_usec = temp.tv_usec-head_node->stat_req_arrival.tv_usec;
+        head_node->stat_req_dispatch.tv_sec = temp.tv_sec - head_node->stat_req_arrival.tv_sec;
+        head_node->stat_req_dispatch.tv_usec = temp.tv_usec - head_node->stat_req_arrival.tv_usec;
         pthread_mutex_unlock(&lock_queue);
 
-
-        pthread_mutex_lock(&lock_list);
-        curr_thread_info->request_node=head_node;
+        // pthread_mutex_lock(&lock_list);
+        curr_thread_info->request_node = head_node;
         // insertLinkedList(busy_tasks, head_node);
-        pthread_mutex_unlock(&lock_list);
+        // pthread_mutex_unlock(&lock_list);
         int conn_fd = curr_thread_info->request_node->connection_fd;
         requestHandle(conn_fd, curr_thread_info);
 
         close(conn_fd);
-        pthread_mutex_lock(&lock_list);
+        // pthread_mutex_lock(&lock_list);
         // removeFromLinkedList(busy_tasks, head_node);
+        curr_thread_info->request_node = NULL;
+        free(head_node);
         tasks_count--;
-        pthread_mutex_unlock(&lock_list);
+        // pthread_mutex_unlock(&lock_list);
 
     }
 free(thread_info);
@@ -75,23 +86,25 @@ free(thread_info);
 void initialize_task(Node request_node, char* sched_policy)
 {
     pthread_mutex_lock(&lock_queue);
-    if (tasks_count == req_number)
+    if (tasks_count >= req_number)
     {
         if(strcmp(sched_policy ,"block") == 0){            
-            while(tasks_count == req_number)
+            while(tasks_count >= req_number)
             {
                 pthread_cond_wait(&requests_max, &lock_queue);
             }
         }
-        else if(strcmp(sched_policy,"drop_tail") == 0){
+        else if(strcmp(sched_policy,"dt") == 0){
             Close (request_node->connection_fd);
+            free(request_node);
             pthread_mutex_unlock(&lock_queue);
             return;
         }
-        else if (strcmp(sched_policy, "drop_head") == 0){
+        else if (strcmp(sched_policy, "dh") == 0){
             if(waiting_tasks->size == 0)
             {
                 Close(request_node->connection_fd);
+                free(request_node);
                 pthread_mutex_unlock(&lock_queue);
                 return;
             }
@@ -105,6 +118,7 @@ void initialize_task(Node request_node, char* sched_policy)
             if(waiting_tasks->size == 0)
             {
                 Close(request_node->connection_fd);
+                free(request_node);
                 pthread_mutex_unlock(&lock_queue);
                 return;
             }
@@ -116,13 +130,17 @@ void initialize_task(Node request_node, char* sched_policy)
             }
         }
         else{
-            // fprintf(stderr, "illegal usage");
-            // exit(1);
+            fprintf(stderr, "\nInvalid schedule policy\n");
+            exit(1);
         }
     }
     pushQueue(waiting_tasks, request_node);
     tasks_count++;
     pthread_cond_signal(&queue_not_empty);
+    if(tasks_count == req_number)
+    {
+        pthread_cond_signal(&requests_max);
+    }
     pthread_mutex_unlock(&lock_queue);
 }
 
@@ -151,7 +169,8 @@ int main(int argc, char *argv[])
         ThreadInfo new_thread_info = (ThreadInfo)malloc(sizeof(*new_thread_info));
         if(new_thread_info == NULL)
         {
-            // not good
+            fprintf(stderr, "\nAllocation Error\n");
+            exit(1);
         }
         
         new_thread_info->request_node = NULL;
@@ -172,20 +191,14 @@ int main(int argc, char *argv[])
     while (1) {
         clientlen = sizeof(clientaddr);
         connfd = Accept(listenfd, (SA *)&clientaddr, (socklen_t *) &clientlen);
-
-
         Node new_node = (Node)malloc(sizeof(*new_node));
         if(new_node == NULL)
         {
-            // not good
+            fprintf(stderr, "\nAllocation Error\n");
+            exit(1);
         }
         new_node->connection_fd = connfd;
         gettimeofday(&new_node->stat_req_arrival, NULL); 
-        if(new_node == NULL)
-        {
-            return -1;
-        }
-        new_node -> connection_fd = connfd;
         initialize_task(new_node, argv[4]);
     }
     deleteQueue(waiting_tasks);

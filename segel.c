@@ -674,7 +674,7 @@ void removeRandom(Queue q)
     {
         curr= curr->next;
     }
-    Node node_to_be_deleted = curr->next;
+    Node node_to_be_deleted = curr;
     Close(node_to_be_deleted->connection_fd);
     free(node_to_be_deleted);
     q->size--;
