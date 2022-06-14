@@ -21,6 +21,7 @@ void addOurStatistics(char* buf, ThreadInfo curr_thread_info)
    sprintf(buf, "%sStat-Thread-Static:: %d\r\n", buf,curr_thread_info->thread_static_count);
 
    sprintf(buf, "%sStat-Thread-Dynamic:: %d\r\n\r\n", buf,curr_thread_info->thread_dynamic_count);
+
 }
 
 void requestError(int fd, char *cause, char *errnum, char *shortmsg, char *longmsg, ThreadInfo curr_thread_info) 
