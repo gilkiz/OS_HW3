@@ -203,9 +203,7 @@ int main(int argc, char *argv[])
     while (1) {
         clientlen = sizeof(clientaddr);
         connfd = Accept(listenfd, (SA *)&clientaddr, (socklen_t *) &clientlen);
-        printf("\nAfterAccept\n");
         Node new_node = createNode(connfd);
-        printf("\nAftercreateNode\n");
         initialize_task(new_node, argv[4]);
     }
     deleteQueue(waiting_tasks);
