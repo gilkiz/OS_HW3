@@ -6,8 +6,8 @@
 {                                           \
     if(p == NULL)                            \
     {                                         \
-        printf("\nAllocation Error\n");          \
-        return NULL;                               \
+        fprintf(stderr, "\nAllocation Error, createQueue\n");          \
+        exit(1);                           \
     }                                            \
 }                                                 \
 
@@ -498,8 +498,10 @@ int open_clientfd(char *hostname, int port)
         return -2; /* check h_errno for cause of error */
     bzero((char *) &serveraddr, sizeof(serveraddr));
     serveraddr.sin_family = AF_INET;
+#ifdef __USE_MISC
     bcopy((char *)hp->h_addr, 
           (char *)&serveraddr.sin_addr.s_addr, hp->h_length);
+#endif
     serveraddr.sin_port = htons(port);
 
     /* Establish a connection with the server */
@@ -578,31 +580,81 @@ int Open_listenfd(int port)
 }
 
 /*====================================*/
+/*================Node================*/
+/*====================================*/
+
+Node createNode(int fd)
+{
+    Node new_node = (Node)malloc(sizeof(*new_node));
+    if(new_node == NULL)
+    {
+        fprintf(stderr, "\nAllocation Error, createNode\n");
+        exit(1);
+    }
+    new_node->connection_fd = fd;
+    gettimeofday(&new_node->stat_req_arrival, NULL);
+    return new_node;
+}
+
+/*====================================*/
+/*==============ThreadInfo============*/
+/*====================================*/
+
+ThreadInfo createThreadInfo(int index, char* sch_policy)
+{
+    if(sch_policy == NULL)
+    {
+        fprintf(stderr, "\nNull Argument, createThreadInfo\n");
+        exit(1);
+    }
+    ThreadInfo new_thread_info = (ThreadInfo)malloc(sizeof(*new_thread_info));
+    if(new_thread_info == NULL)
+    {
+        fprintf(stderr, "\nAllocation Error, createThreadInfo\n");
+        exit(1);
+    }  
+    new_thread_info->request_node = NULL;
+    new_thread_info->thread_index = index;
+    new_thread_info->thread_count = 0;
+    new_thread_info->thread_static_count = 0;
+    new_thread_info->thread_dynamic_count = 0;
+    new_thread_info->sched_policy = sch_policy;
+    return new_thread_info;
+}
+
+/*====================================*/
 /*================Queue===============*/
 /*====================================*/
 
-Queue createQueue()
+Queue createQueue(size_t max_size_)
 {
     Queue q = (Queue)malloc(sizeof(struct queue));
     AFTER_MALLOC(q);
     q->head = NULL;
     q->tail = NULL;
     q->size = 0;
+    q->max_size = max_size_;
     return q;
 }
 
 bool pushQueue(Queue q, Node n)
 {
+    if(q == NULL || n == NULL)
+    {
+        return false;
+    }
+    if(q->size >= q->max_size)
+    {
+        return false;
+    }
     n->next = NULL;
-    n->prev = NULL;
-    if(q->tail == NULL)
+    if(q->size == 0)
     {
         q->head = q->tail = n;
     }
     else
     {
-        q->tail->prev = n;
-        n->next = q->tail;
+        q->tail->next = n;
         q->tail = n;
     }
     q->size++;
@@ -611,22 +663,30 @@ bool pushQueue(Queue q, Node n)
 
 Node popQueue(Queue q)
 {
-    if(q->size == 0)
+    if(q == NULL)
+    {
+        return NULL;
+    }
+    if(q->size <= 0)
     {
         return NULL;
     }
     Node n = q->head;
-    q->head = q->head->prev;
-    if(q->head != NULL)
-    {
-        q->head->next = NULL;
-    }
+    q->head = n->next;
     q->size--;
+    if(q->size == 0)
+    {
+        q->tail = NULL;
+    }
     return n;
 }
 
 void displayQueue(Queue q)
 {
+    if(q == NULL)
+    {
+        return;
+    }
     if(q->size == 0)
     {
         printf("\nThe Queue is empty\n");
@@ -637,21 +697,25 @@ void displayQueue(Queue q)
     while (n != NULL)
     {
         printf("%d\n^\n|\n", n->connection_fd);
-        n = n->prev;
+        n = n->next;
     }
     printf("NULL\nTail of the Queue\n");
 }
 
 void deleteQueue(Queue q)
 {
+    if(q == NULL)
+    {
+        return;
+    }
     if(q->size != 0)
     {
         Node current = q->head;
         Node temp = NULL;
         while(current != NULL)
         {
-            current->next = NULL;
-            temp = current->prev;
+            temp = current->next;
+            Close(current->connection_fd);
             free(current);
             current = temp;
         }
@@ -663,113 +727,39 @@ void deleteQueue(Queue q)
 
 void removeRandom(Queue q)
 {
+    if(q == NULL)
+    {
+        return;
+    }
     int index = 0;
     srand(time(NULL));
     if (q->size > 1)
     {
         index = rand() % (q->size - 1);
     }
-    Node curr=q->head;  
+    Node curr = q->head, temp = curr;  
     for (int i = 0; i < index; i++)
     {
-        curr= curr->next;
+        temp = curr;
+        curr = curr->next;
     }
     Node node_to_be_deleted = curr;
+    if(index <= 0)
+    {
+        if(q->size == 1)
+        {
+            q->head = q->tail = NULL;
+        }
+        else
+        {
+            q->head = q->head->next;
+        }
+    }
+    else
+    {
+        temp->next = curr->next;
+    }
     Close(node_to_be_deleted->connection_fd);
     free(node_to_be_deleted);
     q->size--;
 }
-
-/*====================================*/
-/*=============LinkedList=============*/
-/*====================================*/
-
-
-LinkedList createLinkedList()
-{
-    LinkedList ll = (LinkedList)malloc(sizeof(struct linked_list));
-    AFTER_MALLOC(ll);
-    ll->head = NULL;
-    ll->tail = NULL;
-    ll->size = 0;
-    return ll;
-}
-
-bool insertLinkedList(LinkedList ll, Node n)
-{
-    n->next = NULL;
-    n->prev = NULL;
-    if(ll->tail == NULL)
-    {
-        ll->head = ll->tail = n;
-    }
-    else
-    {
-        ll->tail->prev = n;
-        n->next = ll->tail;
-        ll->tail = n;
-    }
-    ll->size++;
-    return true;
-}
-
-bool removeFromLinkedList(LinkedList ll, Node n)
-{
-    if(n == NULL)
-    {
-        return false;
-    }
-    Node next = n->next;
-    Node prev = n->prev;
-    if(next != NULL)
-    {
-        next->prev = prev;
-    }
-    if(prev != NULL)
-    {
-        prev->next = next;
-    }
-    n->next = n->prev = NULL;
-    n->connection_fd = 0;
-    free(n);
-    ll->size--;
-    return true;
-}
-
-void displayLinkedList(LinkedList ll)
-{
-    if(ll->size == 0)
-    {
-        printf("\nThe Linked List is empty\n");
-        return;
-    }
-    Node n = ll->head;
-    printf("Head of the Linked List\n");
-    while (n != NULL)
-    {
-        printf("%d\n^\n|\n", n->connection_fd);
-        n = n->prev;
-    }
-    printf("NULL\nTail of the Linked List\n");
-}
-
-void deleteLinkedList(LinkedList ll)
-{
-    if(ll->size != 0)
-    {
-        Node current = ll->head;
-        Node temp = NULL;
-        while(current != NULL)
-        {
-            temp = current->prev;
-            current->prev = current->next = NULL;
-            current->connection_fd = 0;
-            free(current);
-            current = temp;
-        }
-        ll->head = ll->tail = NULL;
-        ll->size = 0;
-    }
-    free(ll);
-}
-

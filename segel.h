@@ -127,10 +127,11 @@ typedef struct node
 {
     int connection_fd;
     struct node *next;
-    struct node *prev;
     struct timeval stat_req_arrival;
     struct timeval stat_req_dispatch;
 } * Node;
+
+Node createNode(int fd);
 
 typedef struct thread_info
 {
@@ -144,31 +145,21 @@ typedef struct thread_info
     char* sched_policy;
 }*ThreadInfo;
 
+ThreadInfo createThreadInfo(int index, char* sch_policy);
+
 typedef struct queue
 {
     Node head;
     Node tail;
-    unsigned int size;
+    size_t size;
+    size_t max_size;
 } * Queue;
 
-Queue createQueue();
+Queue createQueue(size_t max_size_);
 bool pushQueue(Queue q, Node n);
 Node popQueue(Queue q);
 void displayQueue(Queue q);
 void deleteQueue(Queue q);
 void removeRandom(Queue q);
-
-typedef struct linked_list
-{
-    Node head;
-    Node tail;
-    unsigned int size;
-} * LinkedList;
-
-LinkedList createLinkedList();
-bool insertLinkedList(LinkedList ll, Node n);
-void displayLinkedList(LinkedList ll);
-bool removeFromLinkedList(LinkedList ll, Node n);
-void deleteLinkedList(LinkedList ll);
 
 #endif /* __CSAPP_H__ */

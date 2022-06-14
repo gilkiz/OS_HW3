@@ -27,9 +27,15 @@ int threads_number, req_number;
 
 void getargs(int *port, int *threads_number, int *req_number, int argc, char *argv[])
 {
-    if (argc < 4) {
-	fprintf(stderr, "Usage: %s <port>\n", argv[0]);
-	exit(1);
+    if(port == NULL || threads_number == NULL || req_number == NULL || argv == NULL)
+    {
+        fprintf(stderr, "Null Argument, getargs\n");
+	    exit(1);
+    }
+    if (argc < 5) 
+    {
+	    fprintf(stderr, "Usage: %s <port>\n", argv[0]);
+	    exit(1);
     }
     *port = atoi(argv[1]);
     *threads_number = atoi(argv[2]);
@@ -48,6 +54,11 @@ void getargs(int *port, int *threads_number, int *req_number, int argc, char *ar
 
 void* thread_start_routine(void* thread_info)
 {
+    if(thread_info == NULL)
+    {
+        fprintf(stderr, "Null Argument, thread_start_routine\n");
+        return NULL;
+    }
     ThreadInfo curr_thread_info = (ThreadInfo)(thread_info);
     while(1)
     {
@@ -57,6 +68,11 @@ void* thread_start_routine(void* thread_info)
             pthread_cond_wait(&queue_not_empty, &lock_queue);
         }
         Node head_node = popQueue(waiting_tasks);
+        if(head_node == NULL)
+        {
+            pthread_mutex_unlock(&lock_queue);
+            continue;
+        }
         struct timeval temp;
         gettimeofday(&temp, NULL); 
         head_node->stat_req_dispatch.tv_sec = temp.tv_sec - head_node->stat_req_arrival.tv_sec;
@@ -73,34 +89,42 @@ void* thread_start_routine(void* thread_info)
         close(conn_fd);
         // pthread_mutex_lock(&lock_list);
         // removeFromLinkedList(busy_tasks, head_node);
+        free(curr_thread_info->request_node);
         curr_thread_info->request_node = NULL;
-        free(head_node);
         tasks_count--;
         // pthread_mutex_unlock(&lock_list);
-
     }
-free(thread_info);
+    free(curr_thread_info);
+    return NULL;
 }
 
 
 void initialize_task(Node request_node, char* sched_policy)
 {
+    if(request_node == NULL || sched_policy == NULL)
+    {
+        fprintf(stderr, "Null Argument, initialize_task\n");
+        return;
+    }
     pthread_mutex_lock(&lock_queue);
     if (tasks_count >= req_number)
     {
-        if(strcmp(sched_policy ,"block") == 0){            
+        if(strcmp(sched_policy ,"block") == 0)
+        {            
             while(tasks_count >= req_number)
             {
                 pthread_cond_wait(&requests_max, &lock_queue);
             }
         }
-        else if(strcmp(sched_policy,"dt") == 0){
-            Close (request_node->connection_fd);
+        else if(strcmp(sched_policy,"dt") == 0)
+        {
+            Close(request_node->connection_fd);
             free(request_node);
             pthread_mutex_unlock(&lock_queue);
             return;
         }
-        else if (strcmp(sched_policy, "dh") == 0){
+        else if (strcmp(sched_policy, "dh") == 0)
+        {
             if(waiting_tasks->size == 0)
             {
                 Close(request_node->connection_fd);
@@ -109,12 +133,16 @@ void initialize_task(Node request_node, char* sched_policy)
                 return;
             }
             Node request_to_be_deleted = popQueue(waiting_tasks);
-            Close(request_to_be_deleted->connection_fd);
-            free(request_to_be_deleted);
-            tasks_count--;
+            if(request_to_be_deleted != NULL)
+            {
+                Close(request_to_be_deleted->connection_fd);
+                free(request_to_be_deleted);
+                tasks_count--;
+            }
             pthread_mutex_unlock(&lock_queue);
         }
-        else if(!strcmp(sched_policy,"random")){
+        else if(!strcmp(sched_policy,"random"))
+        {
             if(waiting_tasks->size == 0)
             {
                 Close(request_node->connection_fd);
@@ -129,15 +157,18 @@ void initialize_task(Node request_node, char* sched_policy)
                 tasks_count--;
             }
         }
-        else{
+        else
+        {
             fprintf(stderr, "\nInvalid schedule policy\n");
             exit(1);
         }
     }
-    pushQueue(waiting_tasks, request_node);
-    tasks_count++;
-    pthread_cond_signal(&queue_not_empty);
-    if(tasks_count == req_number)
+    if(pushQueue(waiting_tasks, request_node))
+    {
+        tasks_count++;
+        pthread_cond_signal(&queue_not_empty);
+    }
+    if(tasks_count >= req_number)
     {
         pthread_cond_signal(&requests_max);
     }
@@ -156,53 +187,28 @@ int main(int argc, char *argv[])
     pthread_mutex_init(&lock_list, NULL);
     pthread_cond_init(&requests_max, NULL);
     pthread_cond_init(&queue_not_empty, NULL);
-    waiting_tasks = createQueue();
-    // busy_tasks = createLinkedList();
+    waiting_tasks = createQueue((size_t)req_number);
 
-    // thread_info = (ThreadInfo *)malloc(sizeof(ThreadInfo) * threads_number);
-    // if(thread_info == NULL)
-    // {
-    //     return -1;
-    // }
-    for(int i=0; i<threads_number; i++)
+    for(int i = 0; i < threads_number; i++)
     {
-        ThreadInfo new_thread_info = (ThreadInfo)malloc(sizeof(*new_thread_info));
-        if(new_thread_info == NULL)
+        ThreadInfo new_thread_info = createThreadInfo(i, argv[4]);
+        if(pthread_create(&(new_thread_info->thread_id), NULL, &thread_start_routine , (void*)new_thread_info) != 0)
         {
-            fprintf(stderr, "\nAllocation Error\n");
+            fprintf(stderr, "\npthread_create Failed\n");
             exit(1);
         }
-        
-        new_thread_info->request_node = NULL;
-        new_thread_info->thread_index = i;
-        new_thread_info->thread_count = 0;
-        new_thread_info->thread_static_count = 0;
-        new_thread_info->thread_dynamic_count = 0;
-        new_thread_info->sched_policy = argv[4];
-        int rc = pthread_create(&(new_thread_info->thread_id), NULL, &thread_start_routine , (void*)new_thread_info);
-        if(rc)
-        {
-            // thread failure
-        }
-        // thread_info[i] = new_thread_info;
     } 
 
     listenfd = Open_listenfd(port);
     while (1) {
         clientlen = sizeof(clientaddr);
         connfd = Accept(listenfd, (SA *)&clientaddr, (socklen_t *) &clientlen);
-        Node new_node = (Node)malloc(sizeof(*new_node));
-        if(new_node == NULL)
-        {
-            fprintf(stderr, "\nAllocation Error\n");
-            exit(1);
-        }
-        new_node->connection_fd = connfd;
-        gettimeofday(&new_node->stat_req_arrival, NULL); 
+        printf("\nAfterAccept\n");
+        Node new_node = createNode(connfd);
+        printf("\nAftercreateNode\n");
         initialize_task(new_node, argv[4]);
     }
     deleteQueue(waiting_tasks);
-
 }
 
 
