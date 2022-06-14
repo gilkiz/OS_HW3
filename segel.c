@@ -759,7 +759,36 @@ void removeRandom(Queue q)
     {
         temp->next = curr->next;
     }
+    if(node_to_be_deleted == q->tail)
+    {
+        q->tail = temp;
+    }
     Close(node_to_be_deleted->connection_fd);
     free(node_to_be_deleted);
     q->size--;
 }
+
+/*
+void popByIndex(Queue q, int index){
+    if(index > q->size){
+        return;
+    }
+    if (index == 0){
+        popQueue(q);
+        return;
+    }
+    Node prev = q->head;
+    for(int i = 0 ; i < index - 1 ; i++){
+        prev = prev->next;
+    }
+    Node to_pop = prev->next;
+    prev->next = to_pop->next;
+    q->size--;
+    if(to_pop->next == NULL){
+        q->tail = prev;
+    }
+    Close(to_pop->connection_fd);
+    free(to_pop);
+    q->size--;
+}
+*/

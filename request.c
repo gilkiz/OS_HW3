@@ -43,8 +43,8 @@ void requestError(int fd, char *cause, char *errnum, char *shortmsg, char *longm
    Rio_writen(fd, buf, strlen(buf));
    printf("%s", buf);
 
-   sprintf(buf, "Content-Length: %lu\r\n\r\n", strlen(body));
-
+   // sprintf(buf, "Content-Length: %lu\r\n\r\n", strlen(body));
+   sprintf(buf, "Content-Length: %lu\r\n", strlen(body));
    addOurStatistics(buf, curr_thread_info);
 
    Rio_writen(fd, buf, strlen(buf));
@@ -126,7 +126,7 @@ void requestGetFiletype(char *filename, char *filetype)
 void requestServeDynamic(int fd, char *filename, char *cgiargs, ThreadInfo curr_thread_info)
 {
    char buf[MAXLINE], *emptylist[] = {NULL};
-
+   curr_thread_info->thread_dynamic_count++;
    // The server does only a little bit of the header.  
    // The CGI script has to finish writing out the header.
    sprintf(buf, "HTTP/1.0 200 OK\r\n");
@@ -162,11 +162,13 @@ void requestServeStatic(int fd, char *filename, int filesize, ThreadInfo curr_th
    srcp = Mmap(0, filesize, PROT_READ, MAP_PRIVATE, srcfd, 0);
    Close(srcfd);
 
+   curr_thread_info->thread_static_count++;
+
    // put together response
    sprintf(buf, "HTTP/1.0 200 OK\r\n");
    sprintf(buf, "%sServer: OS-HW3 Web Server\r\n", buf);
    sprintf(buf, "%sContent-Length: %d\r\n", buf, filesize);
-   sprintf(buf, "%sContent-Type: %s\r\n\r\n", buf, filetype);
+   sprintf(buf, "%sContent-Type: %s\r\n", buf, filetype);
 
    addOurStatistics(buf, curr_thread_info);
 
@@ -211,14 +213,12 @@ void requestHandle(int fd, ThreadInfo curr_thread_info)
          requestError(fd, filename, "403", "Forbidden", "OS-HW3 Server could not read this file", curr_thread_info);
          return;
       }
-      curr_thread_info->thread_static_count++;
       requestServeStatic(fd, filename, sbuf.st_size, curr_thread_info);
    } else {
       if (!(S_ISREG(sbuf.st_mode)) || !(S_IXUSR & sbuf.st_mode)) {
          requestError(fd, filename, "403", "Forbidden", "OS-HW3 Server could not run this CGI program", curr_thread_info);
          return;
       }
-      curr_thread_info->thread_dynamic_count++;
       requestServeDynamic(fd, filename, cgiargs, curr_thread_info);
    }
 }

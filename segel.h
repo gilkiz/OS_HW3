@@ -161,5 +161,6 @@ Node popQueue(Queue q);
 void displayQueue(Queue q);
 void deleteQueue(Queue q);
 void removeRandom(Queue q);
+// void popByIndex(Queue q, int index);
 
 #endif /* __CSAPP_H__ */

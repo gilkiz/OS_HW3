@@ -1,1 +1,0 @@
-/usr/bin/gcc -std=c99 -g -Wall -lpthread -g  -rdynamic CMakeFiles/os_hw3.dir/server.c.o CMakeFiles/os_hw3.dir/request.c.o CMakeFiles/os_hw3.dir/segel.c.o  -o os_hw3 
