@@ -735,7 +735,7 @@ void removeRandom(Queue q)
     srand(time(NULL));
     if (q->size > 1)
     {
-        index = rand() % (q->size - 1);
+        index = rand() % (q->size);
     }
     Node curr = q->head, temp = curr;  
     for (int i = 0; i < index; i++)

@@ -150,8 +150,9 @@ void initialize_task(Node request_node, char* sched_policy)
                 pthread_mutex_unlock(&lock_queue);
                 return;
             }
-            int amount_to_remove = (waiting_tasks->size * 3) / 10;
-            for(int i=0; i<amount_to_remove; i++)
+            double remove = (double)(waiting_tasks->size * 3) / 10;
+            int amount_to_remove = (int)remove + 1;
+            for(int i = 0; i < amount_to_remove; i++)
             {
                 removeRandom(waiting_tasks);
                 tasks_count--;
