@@ -5,7 +5,7 @@
 #include "request.h"
 
 // requestError(      fd,    filename,        "404",    "Not found", "OS-HW3 Server could not find this file");
-
+/*
 void addOurStatistics(char* buf, ThreadInfo curr_thread_info)
 {
    sprintf(buf, "%sStat-Req-Arrival:: %lu.%06lu\r\n", buf,curr_thread_info->request_node->stat_req_arrival.tv_sec,
@@ -20,9 +20,9 @@ void addOurStatistics(char* buf, ThreadInfo curr_thread_info)
 
    sprintf(buf, "%sStat-Thread-Static:: %d\r\n", buf,curr_thread_info->thread_static_count);
 
-   sprintf(buf, "%sStat-Thread-Dynamic:: %d\r\n\r\n", buf,curr_thread_info->thread_dynamic_count);
+   sprintf(buf, "%sStat-Thread-Dynamic:: %d\r\n", buf,curr_thread_info->thread_dynamic_count);
 
-}
+}*/
 
 void requestError(int fd, char *cause, char *errnum, char *shortmsg, char *longmsg, ThreadInfo curr_thread_info) 
 {
@@ -46,12 +46,25 @@ void requestError(int fd, char *cause, char *errnum, char *shortmsg, char *longm
 
    // sprintf(buf, "Content-Length: %lu\r\n\r\n", strlen(body));
    sprintf(buf, "Content-Length: %lu\r\n", strlen(body));
-   addOurStatistics(buf, curr_thread_info);
-
    Rio_writen(fd, buf, strlen(buf));
    printf("%s", buf);
 
-   
+   sprintf(buf, "%sStat-Req-Arrival:: %lu.%06lu\r\n", buf,curr_thread_info->request_node->stat_req_arrival.tv_sec,
+      curr_thread_info->request_node->stat_req_arrival.tv_usec);
+
+   sprintf(buf, "%sStat-Req-Dispatch:: %lu.%06lu\r\n", buf,curr_thread_info->request_node->stat_req_dispatch.tv_sec,
+      curr_thread_info->request_node->stat_req_dispatch.tv_usec);
+
+   sprintf(buf, "%sStat-Thread-Id:: %d\r\n", buf, curr_thread_info->thread_index);
+
+   sprintf(buf, "%sStat-Thread-Count:: %d\r\n", buf,curr_thread_info->thread_count);
+
+   sprintf(buf, "%sStat-Thread-Static:: %d\r\n", buf,curr_thread_info->thread_static_count);
+
+   sprintf(buf, "%sStat-Thread-Dynamic:: %d\r\n\r\n", buf,curr_thread_info->thread_dynamic_count);
+
+   Rio_writen(fd, buf, strlen(buf));
+   printf("%s", buf);
 
    // Write out the content
    Rio_writen(fd, body, strlen(body));
@@ -132,7 +145,19 @@ void requestServeDynamic(int fd, char *filename, char *cgiargs, ThreadInfo curr_
    // The CGI script has to finish writing out the header.
    sprintf(buf, "HTTP/1.0 200 OK\r\n");
    sprintf(buf, "%sServer: OS-HW3 Web Server\r\n", buf);
-   addOurStatistics(buf, curr_thread_info);
+   sprintf(buf, "%sStat-Req-Arrival:: %lu.%06lu\r\n", buf,curr_thread_info->request_node->stat_req_arrival.tv_sec,
+      curr_thread_info->request_node->stat_req_arrival.tv_usec);
+
+   sprintf(buf, "%sStat-Req-Dispatch:: %lu.%06lu\r\n", buf,curr_thread_info->request_node->stat_req_dispatch.tv_sec,
+      curr_thread_info->request_node->stat_req_dispatch.tv_usec);
+
+   sprintf(buf, "%sStat-Thread-Id:: %d\r\n", buf, curr_thread_info->thread_index);
+
+   sprintf(buf, "%sStat-Thread-Count:: %d\r\n", buf,curr_thread_info->thread_count);
+
+   sprintf(buf, "%sStat-Thread-Static:: %d\r\n", buf,curr_thread_info->thread_static_count);
+
+   sprintf(buf, "%sStat-Thread-Dynamic:: %d\r\n", buf,curr_thread_info->thread_dynamic_count);
 
    Rio_writen(fd, buf, strlen(buf));
    pid_t pid_my = Fork();
@@ -171,7 +196,19 @@ void requestServeStatic(int fd, char *filename, int filesize, ThreadInfo curr_th
    sprintf(buf, "%sContent-Length: %d\r\n", buf, filesize);
    sprintf(buf, "%sContent-Type: %s\r\n", buf, filetype);
 
-   addOurStatistics(buf, curr_thread_info);
+   sprintf(buf, "%sStat-Req-Arrival:: %lu.%06lu\r\n", buf,curr_thread_info->request_node->stat_req_arrival.tv_sec,
+      curr_thread_info->request_node->stat_req_arrival.tv_usec);
+
+   sprintf(buf, "%sStat-Req-Dispatch:: %lu.%06lu\r\n", buf,curr_thread_info->request_node->stat_req_dispatch.tv_sec,
+      curr_thread_info->request_node->stat_req_dispatch.tv_usec);
+
+   sprintf(buf, "%sStat-Thread-Id:: %d\r\n", buf, curr_thread_info->thread_index);
+
+   sprintf(buf, "%sStat-Thread-Count:: %d\r\n", buf,curr_thread_info->thread_count);
+
+   sprintf(buf, "%sStat-Thread-Static:: %d\r\n", buf,curr_thread_info->thread_static_count);
+
+   sprintf(buf, "%sStat-Thread-Dynamic:: %d\r\n\r\n", buf,curr_thread_info->thread_dynamic_count);
 
    Rio_writen(fd, buf, strlen(buf));
 

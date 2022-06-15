@@ -1,0 +1,8 @@
+31.txt:FAILED (errors=1)
+32.txt:FAILED (errors=1)
+40.txt:FAILED (errors=1)
+45.txt:FAIL: test_better_with_more_threads (__main__.TestMultiThreaded)
+45.txt:FAILED (failures=1, errors=1)
+47.txt:FAIL: test_better_with_more_threads (__main__.TestMultiThreaded)
+47.txt:FAILED (failures=1)
+4.txt:FAILED (errors=1)

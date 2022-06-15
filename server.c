@@ -1,4 +1,3 @@
-
 #include "segel.h"
 
 // 
@@ -29,7 +28,6 @@ void getargs(int *port, int *threads_number, int *req_number, int argc, char *ar
 {
     if(port == NULL || threads_number == NULL || req_number == NULL || argv == NULL)
     {
-        fprintf(stderr, "Null Argument, getargs\n");
 	    exit(1);
     }
     if (argc < 5) 
@@ -39,15 +37,13 @@ void getargs(int *port, int *threads_number, int *req_number, int argc, char *ar
     }
     *port = atoi(argv[1]);
     *threads_number = atoi(argv[2]);
-    if(*threads_number<1)
+    if(*threads_number < 1)
     {
-        fprintf(stderr, "\nInvalid threads number, should be a positive integer \n");
 	    exit(1);
     }
     *req_number = atoi(argv[3]);
-    if(*req_number<1)
+    if(*req_number < 1)
     {
-        fprintf(stderr, "\nInvalid requests number, should be a positive integer \n");
 	    exit(1);
     }
 }
@@ -56,7 +52,6 @@ void* thread_start_routine(void* thread_info)
 {
     if(thread_info == NULL)
     {
-        fprintf(stderr, "Null Argument, thread_start_routine\n");
         return NULL;
     }
     ThreadInfo curr_thread_info = (ThreadInfo)(thread_info);
@@ -103,7 +98,6 @@ void initialize_task(Node request_node, char* sched_policy)
 {
     if(request_node == NULL || sched_policy == NULL)
     {
-        fprintf(stderr, "Null Argument, initialize_task\n");
         return;
     }
     pthread_mutex_lock(&lock_queue);
@@ -168,7 +162,6 @@ void initialize_task(Node request_node, char* sched_policy)
         }
         else
         {
-            fprintf(stderr, "\nInvalid schedule policy\n");
             exit(1);
         }
     }
@@ -203,7 +196,6 @@ int main(int argc, char *argv[])
         ThreadInfo new_thread_info = createThreadInfo(i, argv[4]);
         if(pthread_create(&(new_thread_info->thread_id), NULL, &thread_start_routine , (void*)new_thread_info) != 0)
         {
-            fprintf(stderr, "\npthread_create Failed\n");
             exit(1);
         }
     } 

@@ -6,8 +6,7 @@
 {                                           \
     if(p == NULL)                            \
     {                                         \
-        fprintf(stderr, "\nAllocation Error, createQueue\n");          \
-        exit(1);                           \
+        return NULL;                           \
     }                                            \
 }                                                 \
 
@@ -588,7 +587,6 @@ Node createNode(int fd)
     Node new_node = (Node)malloc(sizeof(*new_node));
     if(new_node == NULL)
     {
-        fprintf(stderr, "\nAllocation Error, createNode\n");
         exit(1);
     }
     new_node->connection_fd = fd;
@@ -604,14 +602,12 @@ ThreadInfo createThreadInfo(int index, char* sch_policy)
 {
     if(sch_policy == NULL)
     {
-        fprintf(stderr, "\nNull Argument, createThreadInfo\n");
-        exit(1);
+        return NULL;
     }
     ThreadInfo new_thread_info = (ThreadInfo)malloc(sizeof(*new_thread_info));
     if(new_thread_info == NULL)
     {
-        fprintf(stderr, "\nAllocation Error, createThreadInfo\n");
-        exit(1);
+        return NULL;
     }  
     new_thread_info->request_node = NULL;
     new_thread_info->thread_index = index;
@@ -767,28 +763,3 @@ void removeRandom(Queue q)
     free(node_to_be_deleted);
     q->size--;
 }
-
-/*
-void popByIndex(Queue q, int index){
-    if(index > q->size){
-        return;
-    }
-    if (index == 0){
-        popQueue(q);
-        return;
-    }
-    Node prev = q->head;
-    for(int i = 0 ; i < index - 1 ; i++){
-        prev = prev->next;
-    }
-    Node to_pop = prev->next;
-    prev->next = to_pop->next;
-    q->size--;
-    if(to_pop->next == NULL){
-        q->tail = prev;
-    }
-    Close(to_pop->connection_fd);
-    free(to_pop);
-    q->size--;
-}
-*/

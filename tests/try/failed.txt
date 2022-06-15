@@ -1,6 +1,0 @@
-5.txt:FAIL: test_better_with_more_threads (__main__.TestMultiThreaded)
-5.txt:FAILED (failures=1)
-74.txt:FAILED (errors=1)
-81.txt:FAILED (errors=1)
-86.txt:FAILED (errors=1)
-98.txt:FAILED (errors=1)
