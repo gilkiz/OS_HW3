@@ -626,7 +626,7 @@ ThreadInfo createThreadInfo(int index, char* sch_policy)
 /*================Queue===============*/
 /*====================================*/
 
-Queue createQueue(size_t max_size_)
+Queue createQueue(int max_size_)
 {
     Queue q = (Queue)malloc(sizeof(struct queue));
     AFTER_MALLOC(q);

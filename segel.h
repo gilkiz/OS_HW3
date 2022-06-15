@@ -151,11 +151,11 @@ typedef struct queue
 {
     Node head;
     Node tail;
-    size_t size;
-    size_t max_size;
+    int size;
+    int max_size;
 } * Queue;
 
-Queue createQueue(size_t max_size_);
+Queue createQueue(int max_size_);
 bool pushQueue(Queue q, Node n);
 Node popQueue(Queue q);
 void displayQueue(Queue q);

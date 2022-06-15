@@ -150,14 +150,22 @@ void initialize_task(Node request_node, char* sched_policy)
                 pthread_mutex_unlock(&lock_queue);
                 return;
             }
-            int amount_to_remove = (waiting_tasks->size)*0.3 + 1;
+            int amount_to_remove = waiting_tasks->max_size * 3;
+            if(amount_to_remove % 10 != 0)
+            {
+                amount_to_remove = (int)ceil(amount_to_remove / 10);
+            }
+            else
+            {
+                amount_to_remove /= 10;
+            }
+
             for(int i = 0; i < amount_to_remove; i++)
             {
                 removeRandom(waiting_tasks);
                 tasks_count--;
             }
         }
-        
         else
         {
             fprintf(stderr, "\nInvalid schedule policy\n");
