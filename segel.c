@@ -582,7 +582,7 @@ int Open_listenfd(int port)
 /*================Node================*/
 /*====================================*/
 
-Node createNode(int fd)
+Node createNode(int fd, struct timeval arrive_t)
 {
     Node new_node = (Node)malloc(sizeof(*new_node));
     if(new_node == NULL)
@@ -590,7 +590,7 @@ Node createNode(int fd)
         exit(1);
     }
     new_node->connection_fd = fd;
-    gettimeofday(&new_node->stat_req_arrival, NULL);
+    new_node->stat_req_arrival = arrive_t;
     return new_node;
 }
 

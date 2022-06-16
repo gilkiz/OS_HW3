@@ -1,0 +1,17 @@
+[
+{
+  "directory": "/home/student/Desktop/HW3/OS_HW3/build",
+  "command": "/usr/bin/gcc   -std=c99 -g -Wall -lpthread -g   -o CMakeFiles/os_hw3.dir/server.c.o   -c /home/student/Desktop/HW3/OS_HW3/server.c",
+  "file": "/home/student/Desktop/HW3/OS_HW3/server.c"
+},
+{
+  "directory": "/home/student/Desktop/HW3/OS_HW3/build",
+  "command": "/usr/bin/gcc   -std=c99 -g -Wall -lpthread -g   -o CMakeFiles/os_hw3.dir/request.c.o   -c /home/student/Desktop/HW3/OS_HW3/request.c",
+  "file": "/home/student/Desktop/HW3/OS_HW3/request.c"
+},
+{
+  "directory": "/home/student/Desktop/HW3/OS_HW3/build",
+  "command": "/usr/bin/gcc   -std=c99 -g -Wall -lpthread -g   -o CMakeFiles/os_hw3.dir/segel.c.o   -c /home/student/Desktop/HW3/OS_HW3/segel.c",
+  "file": "/home/student/Desktop/HW3/OS_HW3/segel.c"
+}
+]

@@ -203,8 +203,10 @@ int main(int argc, char *argv[])
     listenfd = Open_listenfd(port);
     while (1) {
         clientlen = sizeof(clientaddr);
+        struct timeval arrive;
         connfd = Accept(listenfd, (SA *)&clientaddr, (socklen_t *) &clientlen);
-        Node new_node = createNode(connfd);
+        gettimeofday(&arrive, NULL);
+        Node new_node = createNode(connfd, arrive);
         initialize_task(new_node, argv[4]);
     }
     deleteQueue(waiting_tasks);

@@ -131,7 +131,7 @@ typedef struct node
     struct timeval stat_req_dispatch;
 } * Node;
 
-Node createNode(int fd);
+Node createNode(int fd, struct timeval arrive_t);
 
 typedef struct thread_info
 {
