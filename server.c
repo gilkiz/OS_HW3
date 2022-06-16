@@ -15,7 +15,7 @@
 static Queue waiting_tasks;
 
 
-pthread_mutex_t lock_queue, lock_list;
+pthread_mutex_t lock_queue;
 pthread_cond_t requests_not_max, queue_not_empty;
 void requestHandle(int fd, ThreadInfo curr_thread_info);
 
@@ -73,19 +73,20 @@ void* thread_start_routine(void* thread_info)
         }
         timersub(&temp,&head_node->stat_req_arrival, &head_node->stat_req_dispatch); 
         pthread_mutex_unlock(&lock_queue);
-
  
         curr_thread_info->request_node = head_node;
 
-        int conn_fd = curr_thread_info->request_node->connection_fd;
-        requestHandle(conn_fd, curr_thread_info);
+        requestHandle(curr_thread_info->request_node->connection_fd, curr_thread_info);
 
-        close(conn_fd);
+        Close(curr_thread_info->request_node->connection_fd);
     
         free(curr_thread_info->request_node);
         curr_thread_info->request_node = NULL;
+        
+        pthread_mutex_lock(&lock_queue);
         tasks_count--;
         pthread_cond_signal(&requests_not_max);
+        pthread_mutex_unlock(&lock_queue);
         
     }
     free(curr_thread_info);
@@ -169,10 +170,7 @@ void initialize_task(Node request_node, char* sched_policy)
         tasks_count++;
         pthread_cond_signal(&queue_not_empty);
     }
-    // if(tasks_count >= req_number)
-    // {
-    //     pthread_cond_signal(&requests_not_max);
-    // }
+    
     pthread_mutex_unlock(&lock_queue);
 }
 
@@ -185,7 +183,6 @@ int main(int argc, char *argv[])
 
 
     pthread_mutex_init(&lock_queue, NULL);
-    pthread_mutex_init(&lock_list, NULL);
     pthread_cond_init(&requests_not_max, NULL);
     pthread_cond_init(&queue_not_empty, NULL);
     waiting_tasks = createQueue((size_t)req_number);
