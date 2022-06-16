@@ -61,14 +61,15 @@ void* thread_start_routine(void* thread_info)
         {
             pthread_cond_wait(&queue_not_empty, &lock_queue);
         }
-        Node head_node = popQueue(waiting_tasks);
+        struct timeval temp;
+        Node head_node = getHead(waiting_tasks);
+        gettimeofday(&temp, NULL);
+        head_node = popQueue(waiting_tasks);
         if(head_node == NULL)
         {
             pthread_mutex_unlock(&lock_queue);
             continue;
         }
-        struct timeval temp;
-        gettimeofday(&temp, NULL);
         timersub(&temp,&head_node->stat_req_arrival, &head_node->stat_req_dispatch); 
         pthread_mutex_unlock(&lock_queue);
 

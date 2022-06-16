@@ -677,6 +677,11 @@ Node popQueue(Queue q)
     return n;
 }
 
+Node getHead(Queue q)
+{
+    return (q != NULL) ? q->head : NULL;
+}
+
 void displayQueue(Queue q)
 {
     if(q == NULL)

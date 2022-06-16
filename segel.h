@@ -158,6 +158,7 @@ typedef struct queue
 Queue createQueue(int max_size_);
 bool pushQueue(Queue q, Node n);
 Node popQueue(Queue q);
+Node getHead(Queue q);
 void displayQueue(Queue q);
 void deleteQueue(Queue q);
 void removeRandom(Queue q);
