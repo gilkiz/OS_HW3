@@ -16,7 +16,7 @@ static Queue waiting_tasks;
 
 
 pthread_mutex_t lock_queue, lock_list;
-pthread_cond_t requests_max, queue_not_empty;
+pthread_cond_t requests_not_max, queue_not_empty;
 void requestHandle(int fd, ThreadInfo curr_thread_info);
 
 int tasks_count = 0;
@@ -65,6 +65,7 @@ void* thread_start_routine(void* thread_info)
         Node head_node = getHead(waiting_tasks);
         gettimeofday(&temp, NULL);
         head_node = popQueue(waiting_tasks);
+        
         if(head_node == NULL)
         {
             pthread_mutex_unlock(&lock_queue);
@@ -84,7 +85,8 @@ void* thread_start_routine(void* thread_info)
         free(curr_thread_info->request_node);
         curr_thread_info->request_node = NULL;
         tasks_count--;
-      
+        pthread_cond_signal(&requests_not_max);
+        
     }
     free(curr_thread_info);
     return NULL;
@@ -104,7 +106,7 @@ void initialize_task(Node request_node, char* sched_policy)
         {            
             while(tasks_count >= req_number)
             {
-                pthread_cond_wait(&requests_max, &lock_queue);
+                pthread_cond_wait(&requests_not_max, &lock_queue);
             }
         }
         else if(strcmp(sched_policy,"dt") == 0)
@@ -167,10 +169,10 @@ void initialize_task(Node request_node, char* sched_policy)
         tasks_count++;
         pthread_cond_signal(&queue_not_empty);
     }
-    if(tasks_count >= req_number)
-    {
-        pthread_cond_signal(&requests_max);
-    }
+    // if(tasks_count >= req_number)
+    // {
+    //     pthread_cond_signal(&requests_not_max);
+    // }
     pthread_mutex_unlock(&lock_queue);
 }
 
@@ -184,7 +186,7 @@ int main(int argc, char *argv[])
 
     pthread_mutex_init(&lock_queue, NULL);
     pthread_mutex_init(&lock_list, NULL);
-    pthread_cond_init(&requests_max, NULL);
+    pthread_cond_init(&requests_not_max, NULL);
     pthread_cond_init(&queue_not_empty, NULL);
     waiting_tasks = createQueue((size_t)req_number);
 
