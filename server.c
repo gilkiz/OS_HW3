@@ -13,8 +13,7 @@
 // HW3: Parse the new arguments too
 
 static Queue waiting_tasks;
-// static LinkedList busy_tasks;
-// static ThreadInfo *thread_info;
+
 
 pthread_mutex_t lock_queue, lock_list;
 pthread_cond_t requests_max, queue_not_empty;
@@ -74,20 +73,18 @@ void* thread_start_routine(void* thread_info)
         head_node->stat_req_dispatch.tv_usec = temp.tv_usec - head_node->stat_req_arrival.tv_usec;
         pthread_mutex_unlock(&lock_queue);
 
-        // pthread_mutex_lock(&lock_list);
+ 
         curr_thread_info->request_node = head_node;
-        // insertLinkedList(busy_tasks, head_node);
-        // pthread_mutex_unlock(&lock_list);
+
         int conn_fd = curr_thread_info->request_node->connection_fd;
         requestHandle(conn_fd, curr_thread_info);
 
         close(conn_fd);
-        // pthread_mutex_lock(&lock_list);
-        // removeFromLinkedList(busy_tasks, head_node);
+    
         free(curr_thread_info->request_node);
         curr_thread_info->request_node = NULL;
         tasks_count--;
-        // pthread_mutex_unlock(&lock_list);
+      
     }
     free(curr_thread_info);
     return NULL;
