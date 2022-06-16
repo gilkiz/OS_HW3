@@ -1,20 +1,35 @@
-../usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 99399 is still running
+../usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 68674 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/home/student/.local/lib/python3.7/site-packages/http3/models.py:324: ResourceWarning: unclosed <socket.socket fd=18, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 34282)>
-  for k, v in headers
+/home/student/.local/lib/python3.7/site-packages/requests/structures.py:41: ResourceWarning: unclosed <socket.socket fd=13, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 35046)>
+  self._store = OrderedDict()
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/home/student/.local/lib/python3.7/site-packages/http3/models.py:324: ResourceWarning: unclosed <socket.socket fd=19, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 34284)>
-  for k, v in headers
+/home/student/.local/lib/python3.7/site-packages/requests/structures.py:41: ResourceWarning: unclosed <socket.socket fd=14, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 35048)>
+  self._store = OrderedDict()
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/home/student/.local/lib/python3.7/site-packages/http3/models.py:324: ResourceWarning: unclosed <socket.socket fd=20, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 34286)>
-  for k, v in headers
+/home/student/.local/lib/python3.7/site-packages/requests/structures.py:41: ResourceWarning: unclosed <socket.socket fd=15, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 35050)>
+  self._store = OrderedDict()
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/home/student/.local/lib/python3.7/site-packages/http3/models.py:324: ResourceWarning: unclosed <socket.socket fd=21, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 34288)>
-  for k, v in headers
+/home/student/.local/lib/python3.7/site-packages/requests/structures.py:41: ResourceWarning: unclosed <socket.socket fd=16, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 35052)>
+  self._store = OrderedDict()
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/home/student/.local/lib/python3.7/site-packages/http3/models.py:324: ResourceWarning: unclosed <socket.socket fd=22, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 34290)>
-  for k, v in headers
+/home/student/.local/lib/python3.7/site-packages/requests/structures.py:41: ResourceWarning: unclosed <socket.socket fd=17, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 35054)>
+  self._store = OrderedDict()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/student/.local/lib/python3.7/site-packages/requests/structures.py:41: ResourceWarning: unclosed <socket.socket fd=18, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 35056)>
+  self._store = OrderedDict()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/student/.local/lib/python3.7/site-packages/requests/structures.py:41: ResourceWarning: unclosed <socket.socket fd=19, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 35058)>
+  self._store = OrderedDict()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/student/.local/lib/python3.7/site-packages/requests/structures.py:41: ResourceWarning: unclosed <socket.socket fd=20, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 35060)>
+  self._store = OrderedDict()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/student/.local/lib/python3.7/site-packages/requests/structures.py:41: ResourceWarning: unclosed <socket.socket fd=21, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 35062)>
+  self._store = OrderedDict()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/student/.local/lib/python3.7/site-packages/requests/structures.py:41: ResourceWarning: unclosed <socket.socket fd=22, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 35064)>
+  self._store = OrderedDict()
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 /usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=9>
   source=self)
@@ -58,37 +73,37 @@ ResourceWarning: Enable tracemalloc to get the object allocation traceback
 /usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=22>
   source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 99426 is still running
-  ResourceWarning, source=self)
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=6>
-  source=self)
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-../usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 99483 is still running
-  ResourceWarning, source=self)
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-./usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=25>
-  source=self)
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 99553 is still running
-  ResourceWarning, source=self)
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-../usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=35>
-  source=self)
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 99614 is still running
-  ResourceWarning, source=self)
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 99445 is still running
-  ResourceWarning, source=self)
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 99588 is still running
+/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 68705 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 /usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=23>
   source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
+../usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 68770 is still running
+  ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=29>
+  source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 68820 is still running
+  ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+../usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=35>
+  source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 68887 is still running
+  ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 68724 is still running
+  ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 68856 is still running
+  ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
 /usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=24>
+  source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=25>
   source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 /usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=26>
@@ -98,12 +113,6 @@ ResourceWarning: Enable tracemalloc to get the object allocation traceback
   source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 /usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=28>
-  source=self)
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=29>
-  source=self)
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=30>
   source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 /usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=31>
@@ -118,33 +127,36 @@ ResourceWarning: Enable tracemalloc to get the object allocation traceback
 /usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=34>
   source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 99633 is still running
+/usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=30>
+  source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 68906 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 99743 is still running
+./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 69018 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 99848 is still running
+./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 69132 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 99954 is still running
+./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 69243 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 99957 is still running
+./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 69246 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 99961 is still running
+./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 69250 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 99964 is still running
+./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 69253 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 99967 is still running
+./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 69256 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 
 ----------------------------------------------------------------------
-Ran 14 tests in 19.599s
+Ran 14 tests in 19.717s
 
 OK
 Setting up test:

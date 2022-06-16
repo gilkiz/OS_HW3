@@ -1,14 +1,32 @@
-../usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 112203 is still running
+../usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 81946 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/home/student/.local/lib/python3.7/site-packages/http3/dispatch/connection_pool.py:32: ResourceWarning: unclosed <socket.socket fd=18, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 50922)>
-  self.all = {}  # type: typing.Dict[HTTPConnection, float]
+/home/student/.local/lib/python3.7/site-packages/http3/concurrency.py:168: ResourceWarning: unclosed <socket.socket fd=14, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 51678)>
+  await asyncio.wait_for(self.semaphore.acquire(), timeout)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/home/student/.local/lib/python3.7/site-packages/http3/dispatch/connection_pool.py:32: ResourceWarning: unclosed <socket.socket fd=19, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 50924)>
-  self.all = {}  # type: typing.Dict[HTTPConnection, float]
+/home/student/.local/lib/python3.7/site-packages/http3/concurrency.py:168: ResourceWarning: unclosed <socket.socket fd=15, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 51680)>
+  await asyncio.wait_for(self.semaphore.acquire(), timeout)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/home/student/.local/lib/python3.7/site-packages/http3/dispatch/connection_pool.py:32: ResourceWarning: unclosed <socket.socket fd=20, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 50926)>
-  self.all = {}  # type: typing.Dict[HTTPConnection, float]
+/home/student/.local/lib/python3.7/site-packages/http3/concurrency.py:168: ResourceWarning: unclosed <socket.socket fd=16, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 51682)>
+  await asyncio.wait_for(self.semaphore.acquire(), timeout)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/student/.local/lib/python3.7/site-packages/http3/concurrency.py:168: ResourceWarning: unclosed <socket.socket fd=17, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 51684)>
+  await asyncio.wait_for(self.semaphore.acquire(), timeout)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/student/.local/lib/python3.7/site-packages/http3/concurrency.py:168: ResourceWarning: unclosed <socket.socket fd=18, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 51686)>
+  await asyncio.wait_for(self.semaphore.acquire(), timeout)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/student/.local/lib/python3.7/site-packages/http3/concurrency.py:168: ResourceWarning: unclosed <socket.socket fd=19, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 51688)>
+  await asyncio.wait_for(self.semaphore.acquire(), timeout)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/student/.local/lib/python3.7/site-packages/http3/concurrency.py:168: ResourceWarning: unclosed <socket.socket fd=20, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 51690)>
+  await asyncio.wait_for(self.semaphore.acquire(), timeout)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/student/.local/lib/python3.7/site-packages/http3/concurrency.py:168: ResourceWarning: unclosed <socket.socket fd=21, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 51692)>
+  await asyncio.wait_for(self.semaphore.acquire(), timeout)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/student/.local/lib/python3.7/site-packages/http3/concurrency.py:168: ResourceWarning: unclosed <socket.socket fd=22, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 51694)>
+  await asyncio.wait_for(self.semaphore.acquire(), timeout)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 /usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=9>
   source=self)
@@ -46,51 +64,46 @@ ResourceWarning: Enable tracemalloc to get the object allocation traceback
 /usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=20>
   source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/home/student/.local/lib/python3.7/site-packages/http3/dispatch/connection_pool.py:32: ResourceWarning: unclosed <socket.socket fd=21, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 50928)>
-  self.all = {}  # type: typing.Dict[HTTPConnection, float]
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/home/student/.local/lib/python3.7/site-packages/http3/dispatch/connection_pool.py:32: ResourceWarning: unclosed <socket.socket fd=22, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 50930)>
-  self.all = {}  # type: typing.Dict[HTTPConnection, float]
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
 /usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=21>
   source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 /usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=22>
   source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 112229 is still running
-  ResourceWarning, source=self)
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-..bind failed
-Open_listenfd error: Address already in use
-/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 112291 is still running
-  ResourceWarning, source=self)
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-E../usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=35>
-  source=self)
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 112383 is still running
-  ResourceWarning, source=self)
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 112248 is still running
-  ResourceWarning, source=self)
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 112357 is still running
+/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 81977 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 /usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=23>
   source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=24>
+../usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 82037 is still running
+  ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=24>
   source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=27>
+  source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 82086 is still running
+  ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+../usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=35>
+  source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 82151 is still running
+  ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 81997 is still running
+  ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 82120 is still running
+  ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 /usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=25>
   source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 /usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=26>
-  source=self)
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=27>
   source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 /usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=28>
@@ -114,92 +127,35 @@ ResourceWarning: Enable tracemalloc to get the object allocation traceback
 /usr/lib/python3.7/asyncio/selector_events.py:658: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=34>
   source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 112402 is still running
+/usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 82170 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 112509 is still running
+./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 82274 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 112615 is still running
+./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 82388 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 112723 is still running
+./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 82492 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 112726 is still running
+./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 82495 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 112730 is still running
+./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 82499 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 112733 is still running
+./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 82502 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 112736 is still running
+./usr/lib/python3.7/subprocess.py:883: ResourceWarning: subprocess 82505 is still running
   ResourceWarning, source=self)
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
-
-======================================================================
-ERROR: test_single_drop_random (__main__.TestDropRandomRequests)
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "/home/student/.local/lib/python3.7/site-packages/requests_async/adapters.py", line 55, in send
-    timeout=timeout,
-  File "/home/student/.local/lib/python3.7/site-packages/http3/interfaces.py", line 49, in request
-    return await self.send(request, verify=verify, cert=cert, timeout=timeout)
-  File "/home/student/.local/lib/python3.7/site-packages/http3/dispatch/connection_pool.py", line 130, in send
-    raise exc
-  File "/home/student/.local/lib/python3.7/site-packages/http3/dispatch/connection_pool.py", line 121, in send
-    request, verify=verify, cert=cert, timeout=timeout
-  File "/home/student/.local/lib/python3.7/site-packages/http3/dispatch/connection.py", line 53, in send
-    await self.connect(verify=verify, cert=cert, timeout=timeout)
-  File "/home/student/.local/lib/python3.7/site-packages/http3/dispatch/connection.py", line 82, in connect
-    host, port, ssl_context, timeout
-  File "/home/student/.local/lib/python3.7/site-packages/http3/concurrency.py", line 206, in connect
-    timeout.connect_timeout,
-  File "/usr/lib/python3.7/asyncio/tasks.py", line 414, in wait_for
-    return await fut
-  File "/usr/lib/python3.7/asyncio/streams.py", line 77, in open_connection
-    lambda: protocol, host, port, **kwds)
-  File "/usr/lib/python3.7/asyncio/base_events.py", line 954, in create_connection
-    raise exceptions[0]
-  File "/usr/lib/python3.7/asyncio/base_events.py", line 941, in create_connection
-    await self.sock_connect(sock, address)
-  File "/usr/lib/python3.7/asyncio/selector_events.py", line 464, in sock_connect
-    return await fut
-  File "/usr/lib/python3.7/asyncio/selector_events.py", line 494, in _sock_connect_cb
-    raise OSError(err, f'Connect call failed {address}')
-ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8080)
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "./server_tests.py", line 212, in test_single_drop_random
-    asyncio.run(self.make_requests(self.dyn_url, self.max_reqs + 1))
-  File "/usr/lib/python3.7/asyncio/runners.py", line 43, in run
-    return loop.run_until_complete(main)
-  File "/usr/lib/python3.7/asyncio/base_events.py", line 579, in run_until_complete
-    return future.result()
-  File "./server_tests.py", line 148, in make_requests
-    raise res.e
-  File "./server_tests.py", line 81, in make_req
-    response = await requests.get(url)
-  File "/home/student/.local/lib/python3.7/site-packages/requests_async/api.py", line 11, in get
-    return await request("get", url, params=params, **kwargs)
-  File "/home/student/.local/lib/python3.7/site-packages/requests_async/api.py", line 6, in request
-    return await session.request(method=method, url=url, **kwargs)
-  File "/home/student/.local/lib/python3.7/site-packages/requests_async/sessions.py", line 79, in request
-    resp = await self.send(prep, **send_kwargs)
-  File "/home/student/.local/lib/python3.7/site-packages/requests_async/sessions.py", line 136, in send
-    r = await adapter.send(request, **kwargs)
-  File "/home/student/.local/lib/python3.7/site-packages/requests_async/adapters.py", line 58, in send
-    raise ConnectionError(err, request=request)
-requests.exceptions.ConnectionError: [Errno 111] Connect call failed ('127.0.0.1', 8080)
 
 ----------------------------------------------------------------------
-Ran 14 tests in 19.407s
+Ran 14 tests in 19.613s
 
-FAILED (errors=1)
+OK
 Setting up test:
 	thread: 3
 	queue size: 7
@@ -233,6 +189,8 @@ Setting up test:
 	queue size: 16
 	policy: random
 Requesting url: http://localhost:8080/output.cgi
+Requests succeeded: 13
+Requests failed: 4
 Setting up test:
 	thread: 3
 	queue size: 7

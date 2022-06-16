@@ -6,9 +6,9 @@
 {                                           \
     if(p == NULL)                            \
     {                                         \
-        return NULL;                           \
-    }                                            \
-}                                                 \
+        exit(1);                               \
+    }                                           \
+}                                                \
 
 
 /************************** 
@@ -602,12 +602,12 @@ ThreadInfo createThreadInfo(int index, char* sch_policy)
 {
     if(sch_policy == NULL)
     {
-        return NULL;
+        exit(1);
     }
     ThreadInfo new_thread_info = (ThreadInfo)malloc(sizeof(*new_thread_info));
     if(new_thread_info == NULL)
     {
-        return NULL;
+        exit(1);
     }  
     new_thread_info->request_node = NULL;
     new_thread_info->thread_index = index;
@@ -637,7 +637,7 @@ bool pushQueue(Queue q, Node n)
 {
     if(q == NULL || n == NULL)
     {
-        return false;
+        exit(1);
     }
     if(q->size >= q->max_size)
     {
@@ -661,7 +661,7 @@ Node popQueue(Queue q)
 {
     if(q == NULL)
     {
-        return NULL;
+        exit(1);
     }
     if(q->size <= 0)
     {
@@ -680,27 +680,6 @@ Node popQueue(Queue q)
 Node getHead(Queue q)
 {
     return (q != NULL) ? q->head : NULL;
-}
-
-void displayQueue(Queue q)
-{
-    if(q == NULL)
-    {
-        return;
-    }
-    if(q->size == 0)
-    {
-        printf("\nThe Queue is empty\n");
-        return;
-    }
-    Node n = q->head;
-    printf("Head of the Queue\n");
-    while (n != NULL)
-    {
-        printf("%d\n^\n|\n", n->connection_fd);
-        n = n->next;
-    }
-    printf("NULL\nTail of the Queue\n");
 }
 
 void deleteQueue(Queue q)

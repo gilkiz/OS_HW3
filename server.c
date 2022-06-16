@@ -15,7 +15,7 @@
 static Queue waiting_tasks;
 
 
-pthread_mutex_t lock_queue, lock_list;
+pthread_mutex_t lock_queue;
 pthread_cond_t requests_not_max, queue_not_empty;
 void requestHandle(int fd, ThreadInfo curr_thread_info);
 
@@ -185,7 +185,6 @@ int main(int argc, char *argv[])
 
 
     pthread_mutex_init(&lock_queue, NULL);
-    pthread_mutex_init(&lock_list, NULL);
     pthread_cond_init(&requests_not_max, NULL);
     pthread_cond_init(&queue_not_empty, NULL);
     waiting_tasks = createQueue((size_t)req_number);
