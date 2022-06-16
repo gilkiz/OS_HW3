@@ -91,7 +91,7 @@ void* thread_start_routine(void* thread_info)
     }
     free(curr_thread_info);
     return NULL;
-}
+} 
 
 
 void initialize_task(Node request_node, char* sched_policy)
