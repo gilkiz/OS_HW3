@@ -14,7 +14,6 @@
 
 static Queue waiting_tasks;
 
-
 pthread_mutex_t lock_queue;
 pthread_cond_t requests_not_max, queue_not_empty;
 void requestHandle(int fd, ThreadInfo curr_thread_info);
@@ -45,14 +44,14 @@ void getargs(int *port, int *threads_number, int *req_number, int argc, char *ar
     {
 	    exit(1);
     }
+    if(argv[4] == NULL)
+    {
+        exit(1);
+    }
 }
 
 void* thread_start_routine(void* thread_info)
 {
-    if(thread_info == NULL)
-    {
-        return NULL;
-    }
     ThreadInfo curr_thread_info = (ThreadInfo)(thread_info);
     while(1)
     {
@@ -96,10 +95,6 @@ void* thread_start_routine(void* thread_info)
 
 void initialize_task(Node request_node, char* sched_policy)
 {
-    if(request_node == NULL || sched_policy == NULL)
-    {
-        return;
-    }
     pthread_mutex_lock(&lock_queue);
     if (tasks_count >= req_number)
     {
