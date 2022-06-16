@@ -70,8 +70,6 @@ void* thread_start_routine(void* thread_info)
         struct timeval temp;
         gettimeofday(&temp, NULL);
         timersub(&temp,&head_node->stat_req_arrival, &head_node->stat_req_dispatch); 
-        // head_node->stat_req_dispatch.tv_sec = temp.tv_sec - head_node->stat_req_arrival.tv_sec;
-        // head_node->stat_req_dispatch.tv_usec = temp.tv_usec - head_node->stat_req_arrival.tv_usec;
         pthread_mutex_unlock(&lock_queue);
 
  
@@ -202,7 +200,10 @@ int main(int argc, char *argv[])
     while (1) {
         clientlen = sizeof(clientaddr);
         connfd = Accept(listenfd, (SA *)&clientaddr, (socklen_t *) &clientlen);
+        struct timeval temp_time_val;
+        gettimeofday(&temp_time_val, NULL);
         Node new_node = createNode(connfd);
+        new_node->stat_req_arrival = temp_time_val;
         initialize_task(new_node, argv[4]);
     }
     deleteQueue(waiting_tasks);
