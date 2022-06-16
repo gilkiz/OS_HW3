@@ -73,24 +73,25 @@ void* thread_start_routine(void* thread_info)
         }
         timersub(&temp,&head_node->stat_req_arrival, &head_node->stat_req_dispatch); 
         pthread_mutex_unlock(&lock_queue);
-
  
         curr_thread_info->request_node = head_node;
 
-        int conn_fd = curr_thread_info->request_node->connection_fd;
-        requestHandle(conn_fd, curr_thread_info);
+        requestHandle(curr_thread_info->request_node->connection_fd, curr_thread_info);
 
-        close(conn_fd);
+        Close(curr_thread_info->request_node->connection_fd);
     
         free(curr_thread_info->request_node);
         curr_thread_info->request_node = NULL;
+        
+        pthread_mutex_lock(&lock_queue);
         tasks_count--;
         pthread_cond_signal(&requests_not_max);
+        pthread_mutex_unlock(&lock_queue);
         
     }
     free(curr_thread_info);
     return NULL;
-}
+} 
 
 
 void initialize_task(Node request_node, char* sched_policy)
@@ -169,10 +170,7 @@ void initialize_task(Node request_node, char* sched_policy)
         tasks_count++;
         pthread_cond_signal(&queue_not_empty);
     }
-    // if(tasks_count >= req_number)
-    // {
-    //     pthread_cond_signal(&requests_not_max);
-    // }
+    
     pthread_mutex_unlock(&lock_queue);
 }
 
