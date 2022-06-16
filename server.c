@@ -68,9 +68,10 @@ void* thread_start_routine(void* thread_info)
             continue;
         }
         struct timeval temp;
-        gettimeofday(&temp, NULL); 
-        head_node->stat_req_dispatch.tv_sec = temp.tv_sec - head_node->stat_req_arrival.tv_sec;
-        head_node->stat_req_dispatch.tv_usec = temp.tv_usec - head_node->stat_req_arrival.tv_usec;
+        gettimeofday(&temp, NULL);
+        timersub(&temp,&head_node->stat_req_arrival, &head_node->stat_req_dispatch); 
+        // head_node->stat_req_dispatch.tv_sec = temp.tv_sec - head_node->stat_req_arrival.tv_sec;
+        // head_node->stat_req_dispatch.tv_usec = temp.tv_usec - head_node->stat_req_arrival.tv_usec;
         pthread_mutex_unlock(&lock_queue);
 
  
